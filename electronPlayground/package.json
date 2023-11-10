@@ -5,11 +5,29 @@
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "electron .",
+    "build": "electron-builder",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
+  },
+  "repository": "https://github.com/philSism/electronPlayground",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
+  "build": {
+    "appId": "electronplayground",
+    "productName": "ElectronPlayground",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "publish": [
+        "github"
+      ]
+    }
   },
   "keywords": [],
   "author": {
