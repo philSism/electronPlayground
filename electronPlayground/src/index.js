@@ -13,7 +13,7 @@ autoUpdater.setFeedURL({
   provider: 'github',
   owner: 'philSism',
   repo: 'electronPlayground',
-  private: no,
+  private: false,
 })
 
 const createWindow = () => {
@@ -62,22 +62,20 @@ app.on('activate', () => {
 
 autoUpdater.on('update-available', () => {
   console.info('update ready')
-  // document.getElementById('updateMessage').innerText = 'Update available'
+  let download = autoUpdater.downloadUpdate()
+  console.info(download)
 })
 
 autoUpdater.on('update-not-available', () => {
   console.info('no update')
-  // document.getElementById('updateMessage').innerText = 'App is fully updated'
 })
 
 autoUpdater.on('update-downloaded', () => {
   console.info('update downloaded')
-  // document.getElementById('updateMessage').innerText = 'Update download: completed'
 })
 
 autoUpdater.on('error', () => {
   console.info('error')
-  // document.getElementById('updateMessage').innerText = 'AutoUpdater: ERROR'
 })
 
 // In this file you can include the rest of your app's specific main process
