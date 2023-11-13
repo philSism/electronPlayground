@@ -1,15 +1,20 @@
-const { app, BrowserWindow, autoUpdater } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
-// const { autoUpdater, AppUpdater } = require('electron-updater')
+const { autoUpdater } = require('electron-updater')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-// autoUpdater.autoDownload = false
-// autoUpdater.autoInstallOnAppQuit = true
-autoUpdater.setFeedURL('https://github.com/philSism/electronPlayground')
+autoUpdater.autoDownload = false
+autoUpdater.autoInstallOnAppQuit = true
+autoUpdater.setFeedURL({
+  provider: 'github',
+  owner: 'philSism',
+  repo: 'electronPlayground',
+  private: no,
+})
 
 const createWindow = () => {
   // Create the browser window.
@@ -18,6 +23,7 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      devTools: false
     },
   });
 
@@ -25,7 +31,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -56,21 +62,22 @@ app.on('activate', () => {
 
 autoUpdater.on('update-available', () => {
   console.info('update ready')
-  document.getElementById('updateMessage').innerText = 'Update available'
+  // document.getElementById('updateMessage').innerText = 'Update available'
 })
 
 autoUpdater.on('update-not-available', () => {
   console.info('no update')
-  document.getElementById('updateMessage').innerText = 'App is fully updated'
+  // document.getElementById('updateMessage').innerText = 'App is fully updated'
 })
 
 autoUpdater.on('update-downloaded', () => {
-  document.getElementById('updateMessage').innerText = 'Update download: completed'
+  console.info('update downloaded')
+  // document.getElementById('updateMessage').innerText = 'Update download: completed'
 })
 
 autoUpdater.on('error', () => {
   console.info('error')
-  document.getElementById('updateMessage').innerText = 'AutoUpdater: ERROR'
+  // document.getElementById('updateMessage').innerText = 'AutoUpdater: ERROR'
 })
 
 // In this file you can include the rest of your app's specific main process
